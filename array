@@ -1,0 +1,6 @@
+  <script>
+    var wordarr = ["apple","banana","carrot","data","elephant","fast","ground","html","icecream","jam","korea","lion","master","note","operate","pig"];
+    document.write(wordarr[2]);
+    </script>
+    
+    가장 기본적인 배열의 선언과 document.write()를 사용한 출력이다.
