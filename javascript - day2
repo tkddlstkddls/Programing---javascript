@@ -1,0 +1,203 @@
+<객체>
+
+자바스크립트는 객체 기반의 스크립트 언어이며 자바스크립트를 이루고 있는 거의 모든 것이 객체이다.
+자바스크립트의 객체는 키와 값으로 구성된 프로퍼티들의 집합이다.
+
+<프로퍼티>
+프로퍼티는 프로퍼티 키(이름)와 프로퍼티 값으로 구성된다.
+
+- 프로퍼티 키 : 빈 문자열을 포함하는 모든 문자열 또는 symbol 값
+- 프로퍼티 값 : 모든 값
+* 프로퍼티 값이 함수일 경우, 일반 함수와 구분하기 위해 메소드라 부른다. 즉, 메소드는 객체에 제한되어 있는 함수를 의미
+
+<객체 생성 방법>
+- 객체 리터럴
+  기장 일반적인 자바스크립트의 객체 생성 방식이다. 중괄호 {} 를 사용하여 객체를 생성하는데 {}내에 1개 이상의 프로퍼티를
+  기술하면 해당 프로퍼티가 추가된 객체를 생성할 수 있다. {}내에 아무것도 기술하지 않으면 빈 객체가 생성된다.
+  var emptyObject = {};
+console.log(typeof emptyObject); // object
+
+  
+- object 생성자 함수
+  생성자 함수란 new 키워드와 함께 객체를 생성하고 초기화 하는 함수를 말한다. 생성자 함수를 통해 생성된 객체를 인스턴스
+  (instance)라고 한다.
+  // 빈 객체의 생성
+var person = new Object();
+// 프로퍼티 추가
+person.name = 'Lee';
+person.gender = 'male';
+person.sayHello = function () {
+  console.log('Hi! My name is ' + this.name);
+};
+
+console.log(typeof person); // object
+console.log(person); // {name: "Lee", gender: "male", sayHello: ƒ}
+- 생성자 함수
+  객체 리터럴 방식과 object 생성자 함수 방식으로 객체를 생성하는 것은 프로퍼티 값만 다른 여러 개의 객체를 생성할 때
+  불편하다.
+  // 생성자 함수
+function Person(name, gender) {
+  this.name = name;
+  this.gender = gender;
+  this.sayHello = function(){
+    console.log('Hi! My name is ' + this.name);
+  };
+}
+
+// 인스턴스의 생성
+var person1 = new Person('Lee', 'male');
+var person2 = new Person('Kim', 'female');
+* 생성자 함수를 사용하면 마치 객체를 생성하기 위한 템플릿(클래스)처럼 사용하여 프로퍼티가 동일한 여러 객체 여러 개를
+간편하게 생성할 수 있다.
+
+
+<객체 프로퍼티 접근>
+프로퍼티 키는 문자열이므로 따옴표를 사용한다. 하지만 자바스크립트에서 사용 가능한 유효한 이름인 경우, 따옴표를 생략할
+수 있다. 
+
+
+<프로퍼티 값 읽기>
+객체의 프로퍼티 값에 접근하는 방법은 마침표(.) 표기법과 대괄호([]) 표기법이 있다. 두 방법의 차이를 살펴보자.
+var person = {
+  'first-name': 'Ung-mo',
+  'last-name': 'Lee',
+  gender: 'male',
+  1: 10
+};
+
+console.log(person);
+
+console.log(person.first-name);    // NaN: undefined-undefined
+console.log(person[first-name]);   // ReferenceError: first is not defined
+console.log(person['first-name']); // 'Ung-mo'
+
+console.log(person.gender);    // 'male'
+console.log(person[gender]);   // ReferenceError: gender is not defined
+console.log(person['gender']); // 'male'
+
+console.log(person['1']); // 10
+console.log(person[1]);   // 10 : person[1] -> person['1']
+console.log(person.1);    // SyntaxError
+
+*프로퍼티 키가 유효한 자바스크립트 이름이고 예약어가 아닌 경우 프로퍼티 값은 마침표 표기법, 대괄호 표기법 모두 사용
+가능, 프로퍼티 이름이 유효한 자바스크립트 이름이 아니거나 예약어인 경우 프로퍼티 값은 대괄호 표기법으로 읽어야됨.
+대괄호 표기법을 사용하는 경우, 대괄호 내에 들어가는 프로퍼티 이름은 반드시 문자열!!
+
+객체에 존재하지 않는 프로퍼티를 참조하면 undefined 를 반환함.
+
+<for - in 문>
+-> for-in 문을 사용하면 객체(배열 포함)에 포함된 모든 프로퍼티에 대해 루프를 수행할 수 있다.
+var person = {
+  'first-name': 'Ung-mo',
+  'last-name': 'Lee',
+  gender: 'male'
+};
+
+// prop에 객체의 프로퍼티 이름이 반환된다. 단, 순서는 보장되지 않는다.
+for (var prop in person) {
+  console.log(prop + ': ' + person[prop]);
+}
+
+/*
+first-name: Ung-mo
+last-name: Lee
+gender: male
+*/
+
+var array = ['one', 'two'];
+
+// index에 배열의 경우 인덱스가 반환된다
+for (var index in array) {
+  console.log(index + ': ' + array[index]);
+}
+
+/*
+0: one
+1: two
+*/
+
+<객체와 변경불가성>
+
+string은 변경불가(immutable)하다.
+객체는 변경가능 (mutable)해서, 객체를 공유하고 있는 다른이가 객체를 변경시, 공유한 객체 나머지도 변경이 가능하게 될
+수 도 있다.
+
+의도하지 않은 객체의 변경이 발생하는 원인의 대다수는 레퍼런스를 참조한 다른 객체에서 객체를 변경 하기 때문이다. 
+이 문제의 해결 방법은 비용은 조금 들지만 객체를 불변 객체로 만들어 프로퍼티의 변경을 방지하며 객체의 변경이 필요한
+경우에는 참조가 아닌 객체의 방어적 복사를 통해 새로운 객체를 생성한 후 변경한다.
+
+1. object.assign
+Object.assign은 타킷 객체로 소스 객체의 프로퍼티를 복사한다. 이때 소스 객체의 프로퍼티와 동일한 프로퍼티를 가진 
+타켓 객체의 프로퍼티들은 소스 객체의 프로퍼티로 덮어쓰기된다. 리턴값으로 타킷 객체를 반환한다. 
+ES6에서 추가된 메소드이며 Internet Explorer는 지원하지 않는다.
+
+
+// Copy
+const obj = { a: 1 };
+const copy = Object.assign({}, obj);
+console.log(copy); // { a: 1 }
+console.log(obj == copy); // false
+
+// Merge
+const o1 = { a: 1 };
+const o2 = { b: 2 };
+const o3 = { c: 3 };
+
+const merge1 = Object.assign(o1, o2, o3);
+
+console.log(merge1); // { a: 1, b: 2, c: 3 }
+console.log(o1);     // { a: 1, b: 2, c: 3 }, 타겟 객체가 변경된다!
+
+// Merge
+const o4 = { a: 1 };
+const o5 = { b: 2 };
+const o6 = { c: 3 };
+
+const merge2 = Object.assign({}, o4, o5, o6);
+
+console.log(merge2); // { a: 1, b: 2, c: 3 }
+console.log(o4);     // { a: 1 }
+
+2. object.freeze
+
+const user1 = {
+  name: 'Lee',
+  address: {
+    city: 'Seoul'
+  }
+};
+
+// Object.assign은 완전한 deep copy를 지원하지 않는다.
+const user2 = Object.assign({}, user1, {name: 'Kim'});
+
+console.log(user1.name); // Lee
+console.log(user2.name); // Kim
+
+Object.freeze(user1);
+
+user1.name = 'Kim'; // 무시된다!
+
+console.log(user1); // { name: 'Lee', address: { city: 'Seoul' } }
+
+console.log(Object.isFrozen(user1)); // true
+
+
+하지만 객체 내부의 객체는 변경 가능. -> deep freeze의 필요!
+
+
+<함수>
+
+- function 생성자 함수
+함수 표현식으로 함수를 정의할 때 함수 리터럴 방식을 사용한다. 함수 선언문도 내부적으로 자바스크립트 엔진이 
+기명 함수 표현식으로 변환하므로 결국 함수 리터럴 방식을 사용한다.
+
+따라서 함수 선언문과 함수 표현식은 모두 함수 리터럴 방식으로 함수를 정의하는데 이것은 결국 내장 함수
+Function 생성자 함수로 함수를 생성하는 것을 단순화시킨 short-hand(축약법)이다.
+
+Function 생성자 함수는 Function.prototype.constructor 프로퍼티로 접근할 수 있다.
+
+Function 생성자 함수로 함수를 생성하는 문법은 다음과 같다.
+var square = new Function('number', 'return number * number');
+console.log(square(10)); // 100
+
+
