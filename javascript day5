@@ -1,0 +1,103 @@
+<math property>
+
+1. math.PI
+PI 값(π ≈ 3.141592653589793)을 반환한다.
+
+<math method>
+
+1.Math.abs(x: number): number 
+인수의 절댓값(absolute value)을 반환한다. 절댓값은 반드시 0 또는 양수이어야 한다.
+
+2 Math.round(x: number): number
+인수의 소수점 이하를 반올림한 정수를 반환한다.
+
+3 Math.ceil(x: number): number 
+인수의 소수점 이하를 올림한 정수를 반환한다.
+
+4 Math.floor(x: number): number
+인수의 소수점 이하를 내림한 정수를 반환한다. Math.ceil의 반대 개념이다.
+
+5 Math.sqrt(x: number): number
+인수의 제곱근을 반환한다.
+
+6 Math.random(): number
+임의의 부동 소수점을 반환한다. 반환된 부동 소수점은 0부터 1 미만이다. 즉, 0은 포함되지만 1은 포함되지 않는다.
+
+7 Math.pow(x: number, y: number): number
+첫번째 인수를 밑(base), 두번째 인수를 지수(exponent)로하여 거듭제곱을 반환한다.
+
+8 Math.max(…values: number[]): number ES1
+인수 중에서 가장 큰 수를 반환한다.
+
+9 Math.min(…values: number[]): number ES1
+인수 중에서 가장 작은 수를 반환한다.
+
+<date constructor>
+
+1 new Date()
+인수를 전달하지 않으면 현재 날짜와 시간을 가지는 인스턴스를 반환한다.
+const date = new Date();
+console.log(date); // Thu May 16 2019 17:16:13 GMT+0900 (한국 표준시)
+
+2 new Date(milliseconds)
+인수로 숫자 타입의 밀리초를 전달하면 1970년 1월 1일 00:00(UTC)을 기점으로 인수로 전달된 밀리초만큼 경과한 날짜와 시간을 가지는 인스턴스를 반환한다.
+
+
+<date 메소드>
+1 Date.now
+1970년 1월 1일 00:00:00(UTC)을 기점으로 현재 시간까지 경과한 밀리초를 숫자로 반환한다.
+const now = Date.now();
+console.log(now);
+
+2 Date.parse
+1970년 1월 1일 00:00:00(UTC)을 기점으로 인수로 전달된 지정 시간(new Date(dateString)의 인수와 동일한 형식)까지의 밀리초를 숫자로 반환한다.
+
+let d = Date.parse('Jan 2, 1970 00:00:00 UTC'); // UTC
+console.log(d); // 86400000
+
+d = Date.parse('Jan 2, 1970 09:00:00'); // KST
+console.log(d); // 86400000
+
+d = Date.parse('1970/01/02/09:00:00'); // KST
+console.log(d); // 86400000
+
+Date 예제
+현재 날짜와 시간을 초단위로 반복 출력하는 예제
+(function printNow() {
+  const today = new Date();
+
+  const dayNames = ['(일요일)', '(월요일)', '(화요일)', '(수요일)', '(목요일)', '(금요일)', '(토요일)'];
+  // getDay: 해당 요일(0 ~ 6)를 나타내는 정수를 반환한다.
+  const day = dayNames[today.getDay()];
+
+  const year = today.getFullYear();
+  const month = today.getMonth() + 1;
+  const date = today.getDate();
+  let hour = today.getHours();
+  let minute = today.getMinutes();
+  let second = today.getSeconds();
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+
+  // 12시간제로 변경
+  hour %= 12;
+  hour = hour || 12; // 0 => 12
+
+  // 10미만인 분과 초를 2자리로 변경
+  minute = minute < 10 ? '0' + minute : minute;
+  second = second < 10 ? '0' + second : second;
+
+  const now = `${year}년 ${month}월 ${date}일 ${day} ${hour}:${minute}:${second} ${ampm}`;
+
+  console.log(now);
+  setTimeout(printNow, 1000);
+}());
+
+<정규표현식>
+
+양이 많아 주소로 https://poiemaweb.com/js-regexp
+
+
+출처 : poiemaweb.com
+
+
+
